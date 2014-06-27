@@ -1,0 +1,49 @@
+<script>
+	var userGuess;
+
+	function GuessGame(age, guess) {
+		this.previousGuesses = [];
+		this.age = age;
+		this.guess = guess;
+		this.winner = false;
+		this.lastGuess = 0;
+		this.difference = 0;
+
+		this.findDifference = function() {
+			if (this.age > this.guess) {
+				this.difference = (this.age - this.guess);
+			} 
+			else if (this.age < this.guess) {
+				this.difference = (this.guess - this.age);
+			} 
+			else {
+				this.difference =  0;
+			}
+		}
+
+		this.play = function() {
+			this.findDifference();
+			this.previousGuesses.push(this.guess);
+			this.previousGuesses.sort(function(a, b){return a-b});
+			if (this.age != this.guess) {
+				alert ("Sorry! Guess again!");
+				this.guess = prompt ("You've already guessed: "+ this.previousGuesses + "     " + " Guess my age: ")
+			} 
+			else {
+				this.winner = true;
+				alert ("You got it!");
+			}			
+		}
+	}
+
+
+
+	userGuess = prompt("Guess my age: ")
+	guessAgeGame = new GuessGame(40, userGuess);
+	
+	while (!guessAgeGame.winner) {
+		guessAgeGame.play();
+	}
+	alert("You guessed it in " + (guessAgeGame.previousGuesses.length) + " tries.")
+	alert("These are your guesses: " + guessAgeGame.previousGuesses);
+</script>
